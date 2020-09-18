@@ -27,7 +27,9 @@ import { TinyColor } from '@ctrl/tinycolor';
 
 import styles from './color-area.css.js';
 
-const preventDefault = (event: KeyboardEvent) => event.preventDefault();
+const preventDefault = (event: KeyboardEvent): void => {
+    event.preventDefault();
+};
 
 /**
  * @element sp-color-area
@@ -371,9 +373,9 @@ export class ColorArea extends SpectrumElement {
                 style="transform: translate(${this.x * width}px, ${this.y *
                 height}px);"
                 ${streamingListener({
-                    start: ["pointerdown", this.handlePointerdown],
-                    streamInside: ["pointermove", this.handlePointermove ],
-                    end: [['pointerup', 'pointercancel'], this.handlePointerup]
+                    start: ['pointerdown', this.handlePointerdown],
+                    streamInside: ['pointermove', this.handlePointermove],
+                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
                 })}
             ></sp-color-handle>
 

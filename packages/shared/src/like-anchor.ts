@@ -32,6 +32,7 @@ export interface LikeAnchorInterface {
     renderAnchor(options: {
         id: string;
         className?: string;
+        ariaHidden?: boolean;
         anchorContent?: TemplateResult | TemplateResult[];
     }): TemplateResult;
 }
@@ -58,11 +59,13 @@ export function LikeAnchor<T extends Constructor<ReactiveElement>>(
         public renderAnchor({
             id,
             className,
+            ariaHidden,
             // prettier-ignore
             anchorContent = html`<slot></slot>`,
         }: {
             id: string;
             className?: string;
+            ariaHidden?: boolean;
             anchorContent: TemplateResult | TemplateResult[];
         }): TemplateResult {
             // prettier-ignore
@@ -74,6 +77,7 @@ export function LikeAnchor<T extends Constructor<ReactiveElement>>(
                     download=${ifDefined(this.download)}
                     target=${ifDefined(this.target)}
                     aria-label=${ifDefined(this.label)}
+                    aria-hidden=${ifDefined(ariaHidden ? 'true' : undefined)}
                     rel=${ifDefined(this.rel)}
                 >${anchorContent}</a>`;
         }

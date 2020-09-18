@@ -1,0 +1,14 @@
+---
+layout: layout.njk
+---
+<docs-page class="spectrum-Typography">
+    {% include "partials/logo.njk" %}
+    <div class="parts">
+        <div class="section">
+            {{ content | safe }}
+        </div>
+    </div>
+    {% include "partials/sidenav.njk" %}
+</docs-page>
+<script type="module" src="../src/index.js"></script>
+<script type="module" src="../src/getting-started.js"></script>

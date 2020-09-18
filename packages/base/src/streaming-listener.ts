@@ -14,6 +14,7 @@ import { nothing, Part, ElementPart } from 'lit';
 import { directive, AsyncDirective } from 'lit/async-directive.js';
 import type { DirectiveResult } from 'lit/directive.js';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ListenerConfig = [string | string[], (event?: any) => void];
 type ListenerConfigGroup = {
     start: ListenerConfig;
@@ -22,9 +23,15 @@ type ListenerConfigGroup = {
     streamOutside?: ListenerConfig;
 };
 
-const defaultListener: ListenerConfig = ['', () => {}];
+const defaultListener: ListenerConfig = [
+    '',
+    (): void => {
+        return;
+    },
+];
 
 class StreamingListenerDirective extends AsyncDirective {
+    // eslint-disable-next-line @typescript-eslint/ban-types
     host!: EventTarget | object | Element;
     element!: Element;
 
@@ -35,7 +42,8 @@ class StreamingListenerDirective extends AsyncDirective {
 
     state: 'off' | 'on' = 'off';
 
-    render(_configGroup: ListenerConfigGroup) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    render(_configGroup: ListenerConfigGroup): typeof nothing {
         return nothing;
     }
 
@@ -49,7 +57,7 @@ class StreamingListenerDirective extends AsyncDirective {
                 streamOutside = defaultListener,
             },
         ]: Parameters<this['render']>
-    ) {
+    ): void {
         if (this.element !== (part as ElementPart).element) {
             this.element = (part as ElementPart).element;
             this.removeListeners();
@@ -73,14 +81,19 @@ class StreamingListenerDirective extends AsyncDirective {
         }
     }
 
-    callHandler(value: Function | EventListenerObject, event: any): void {
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+    callHandler(
+        value: (event: any) => void | EventListenerObject,
+        event: any
+    ): void {
         if (typeof value === 'function') {
-            (value as Function).call(this.host, event);
+            (value as (event: any) => void).call(this.host, event);
         } else {
             (value as EventListenerObject).handleEvent(event);
         }
     }
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     handleStart = (event: any): void => {
         this.callHandler(this.start[1], event);
         if (event.defaultPrevented) {
@@ -90,16 +103,19 @@ class StreamingListenerDirective extends AsyncDirective {
         this.addListeners('on');
     };
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     handleStream = (event: any): void => {
         this.callHandler(this.streamInside[1], event);
     };
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     handleEnd = (event: any): void => {
         this.callHandler(this.end[1], event);
         this.removeListeners();
         this.addListeners('off');
     };
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     handleBetween = (event: any): void => {
         this.callHandler(this.streamOutside[1], event);
     };
@@ -131,11 +147,11 @@ class StreamingListenerDirective extends AsyncDirective {
         this.removeListener(this.streamOutside[0], this.handleBetween);
     }
 
-    disconnected() {
+    disconnected(): void {
         this.removeListeners();
     }
 
-    reconnected() {
+    reconnected(): void {
         this.addListeners();
     }
 }

@@ -83,7 +83,7 @@ interface StoryArgs {
     invalid?: boolean;
     open?: boolean;
     quiet?: boolean;
-    [prop: string]: any;
+    [prop: string]: unknown;
 }
 
 export const Default = (args: StoryArgs): TemplateResult => {

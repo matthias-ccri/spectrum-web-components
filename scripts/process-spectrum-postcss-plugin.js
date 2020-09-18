@@ -453,7 +453,6 @@ class SpectrumProcessor {
         const startsWithDir = new RegExp(/\[dir\=/);
         const selectorTransform = this.selectorTransform;
         let skipAll = false;
-
         if (this.component.excludeSourceSelector) {
             for (const regex of this.component.excludeSourceSelector) {
                 if (regex.test(rule.selector)) {

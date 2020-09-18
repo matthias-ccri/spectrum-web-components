@@ -1,0 +1,63 @@
+{
+    "name": "documentation",
+    "private": true,
+    "version": "0.0.1",
+    "description": "The documentation site for Spectrum Web Components",
+    "type": "module",
+    "main": "index.js",
+    "sideEffects": [
+        "_site/**/*.css",
+        "_site/**/*.js",
+        "_site/**/*.json",
+        "src/**/*.css",
+        "src/**/*.js"
+    ],
+    "scripts": {
+        "build-search-index": "node scripts/build-search-index.js",
+        "copy-docs": "node scripts/copy-component-docs.js",
+        "prebuild": "rimraf _site && mkdir -p _site/src/components && rimraf dist && mkdir dist && yarn copy-docs",
+        "build": "yarn build:tsc && yarn build-search-index && yarn build:move-css && yarn build:eleventy && yarn build:postcss && yarn build:rollup",
+        "build:production": "SWC_DIR=spectrum-web-components yarn build",
+        "build:tsc": "tsc --build tsconfig.json",
+        "build:move-css": "cp src/components/*.css _site/src/components/",
+        "build:rollup": "rollup -c rollup.config.js",
+        "build:postcss": "postcss src/components/{styles,fonts}.css -d dist/ --config src/postcss.config.cjs",
+        "build:eleventy": "eleventy --config=.eleventy.cjs",
+        "prewatch": "yarn build",
+        "watch": "run-p 'build:tsc -w' 'build:eleventy --watch' watch:move-css build:postcss 'build:postcss --watch' 'build:rollup --watch' watch:serve",
+        "watch:serve": "wds --root-dir=dist --watch",
+        "watch:move-css": "yarn build:move-css && node scripts/watch-css.js"
+    },
+    "author": "",
+    "license": "Apache-2.0",
+    "dependencies": {
+        "@spectrum-web-components/bundle": "^0.19.4"
+    },
+    "devDependencies": {
+        "@11ty/eleventy": "^0.12.1",
+        "@11ty/eleventy-plugin-syntaxhighlight": "^3.1.0",
+        "@fullhuman/postcss-purgecss": "^4.0.3",
+        "@open-wc/building-rollup": "^1.9.4",
+        "@rollup/plugin-commonjs": "^18.0.0",
+        "@rollup/plugin-json": "^4.1.0",
+        "@types/lunr": "^2.3.3",
+        "@web/dev-server": "^0.1.10",
+        "@web/rollup-plugin-copy": "^0.2.0",
+        "alex": "^9.1.0",
+        "lunr": "^2.3.9",
+        "markdown-it-anchor": "^7.1.0",
+        "postcss-cli": "^8.3.1",
+        "posthtml": "^0.15.1",
+        "posthtml-attrs-parser": "^0.1.1",
+        "posthtml-match-helper": "^1.0.1",
+        "posthtml-transform": "^1.0.10",
+        "rimraf": "^3.0.2",
+        "rollup": "^2.43.0",
+        "rollup-plugin-lit-css": "^2.1.0",
+        "rollup-plugin-minify-html-literals": "^1.2.6",
+        "rollup-plugin-styles": "^3.14.1",
+        "rollup-plugin-workbox": "^6.1.1",
+        "rollup-plugin-visualizer": "^4.2.2",
+        "workbox-build": "^6.1.2"
+    }
+}
