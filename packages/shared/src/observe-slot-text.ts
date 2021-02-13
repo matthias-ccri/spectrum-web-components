@@ -11,13 +11,13 @@ governing permissions and limitations under the License.
 */
 import {
     PropertyValues,
-    UpdatingElement,
+    ReactiveElement,
     queryAssignedNodes,
     property,
 } from '@spectrum-web-components/base';
 
 const slotElementObserver = Symbol('slotElementObserver');
-const assignedNodesList = Symbol('assignedNodes');
+const assignedNodesList = 'longVersionOfAssignedNodesList'; //Symbol('assignedNodes');
 const startObserving = Symbol('startObserving');
 
 type Constructor<T = Record<string, unknown>> = {
@@ -31,11 +31,12 @@ export interface SlotTextObservingInterface {
     manageTextObservedSlot(): void;
 }
 
-export function ObserveSlotText<T extends Constructor<UpdatingElement>>(
+export function ObserveSlotText<T extends Constructor<ReactiveElement>>(
     constructor: T,
     slotSelector?: string
 ): T & Constructor<SlotTextObservingInterface> {
-    class SlotTextObservingElement extends constructor
+    class SlotTextObservingElement
+        extends constructor
         implements SlotTextObservingInterface {
         private [slotElementObserver]: MutationObserver;
 

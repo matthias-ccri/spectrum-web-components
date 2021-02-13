@@ -18,7 +18,7 @@ import '@spectrum-web-components/menu/sp-menu.js';
 import '@spectrum-web-components/menu/sp-menu-item.js';
 import { states } from './states.js';
 import '@spectrum-web-components/field-label/sp-field-label.js';
-import { spreadProps } from '@open-wc/lit-helpers';
+import { spread } from '../../../test/lit-helpers.js';
 
 export default {
     title: 'Picker',
@@ -83,6 +83,7 @@ interface StoryArgs {
     invalid?: boolean;
     open?: boolean;
     quiet?: boolean;
+    [prop: string]: any;
 }
 
 export const Default = (args: StoryArgs): TemplateResult => {
@@ -95,7 +96,7 @@ export const Default = (args: StoryArgs): TemplateResult => {
                 console.log(`Change: ${picker.value}`);
             }}"
             label="Select a Country with a very long label, too long, in fact"
-            ...=${spreadProps(args)}
+            ${spread(args)}
         >
             <sp-menu-item>Deselect</sp-menu-item>
             <sp-menu-item>Select Inverse</sp-menu-item>
@@ -119,7 +120,7 @@ export const quiet = (args: StoryArgs): TemplateResult => {
     return html`
         <sp-field-label for="picker-quiet">Where do you live?</sp-field-label>
         <sp-picker
-            ...=${spreadProps(args)}
+            ${spread(args)}
             id="picker-quiet"
             @change="${(event: Event): void => {
                 const picker = event.target as Picker;
@@ -161,7 +162,7 @@ export const Open = (args: StoryArgs): TemplateResult => {
             <sp-picker
                 id="picker-open"
                 label="Open picker"
-                ...=${spreadProps(args)}
+                ${spread(args)}
                 @change="${(event: Event): void => {
                     const picker = event.target as Picker;
                     console.log(`Change: ${picker.value}`);
@@ -213,7 +214,7 @@ export const initialValue = (args: StoryArgs): TemplateResult => {
                 console.log(`Change: ${picker.value}`);
             }}"
             value="item-2"
-            ...=${spreadProps(args)}
+            ${spread(args)}
         >
             <span slot="label">
                 Select a Country with a very long label, too long in fact
@@ -238,7 +239,7 @@ export const readonly = (args: StoryArgs): TemplateResult => {
             }}"
             readonly
             value="item-2"
-            ...=${spreadProps(args)}
+            ${spread(args)}
         >
             <span slot="label">
                 Select a Country with a very long label, too long in fact
@@ -267,7 +268,7 @@ export const custom = (args: StoryArgs): TemplateResult => {
             }}"
             id="picker-state"
             label="Pick a state"
-            ...=${spreadProps(args)}
+            ${spread(args)}
         >
             ${states.map(
                 (state) => html`

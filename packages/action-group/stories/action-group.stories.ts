@@ -11,7 +11,7 @@ governing permissions and limitations under the License.
 */
 
 import { html, TemplateResult } from '@spectrum-web-components/base';
-import { spreadProps } from '@open-wc/lit-helpers';
+import { spread } from '../../../test/lit-helpers.js';
 
 import '../sp-action-group.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
@@ -102,11 +102,12 @@ interface Properties {
     justified?: boolean;
     quiet?: boolean;
     vertical?: boolean;
+    [prop: string]: any;
 }
 
 function renderIconButtons(args: Properties): TemplateResult {
     return html`
-        <sp-action-group ...=${spreadProps(args)}>
+        <sp-action-group ${spread(args)}>
             <sp-action-button label="Properties">
                 <sp-icon-properties slot="icon"></sp-icon-properties>
             </sp-action-button>
@@ -122,7 +123,7 @@ function renderIconButtons(args: Properties): TemplateResult {
 
 function renderButtons(args: Properties): TemplateResult {
     return html`
-        <sp-action-group ...=${spreadProps(args)}>
+        <sp-action-group ${spread(args)}>
             <sp-action-button>Button 1</sp-action-button>
             <sp-action-button>Longer Button 2</sp-action-button>
             <sp-action-button>Short 3</sp-action-button>
@@ -199,7 +200,7 @@ export const selectsSingleWithTooltips = (): TemplateResult => {
 export const selectsMultiple = (args: Properties): TemplateResult => {
     return html`
         <sp-action-group
-            ...=${spreadProps(args)}
+            ${spread(args)}
             label="Favorite Colors"
             selects="multiple"
             @change=${({ target }: Event & { target: ActionGroup }) => {
@@ -223,7 +224,7 @@ export const selectsMultipleWithTooltips = (
 ): TemplateResult => {
     return html`
         <sp-action-group
-            ...=${spreadProps(args)}
+            ${spread(args)}
             label="Favorite Color"
             selects="multiple"
             @change=${({ target }: Event & { target: ActionGroup }) => {

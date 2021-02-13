@@ -18,13 +18,13 @@ import {
     query,
     PropertyValues,
     styleMap,
+    StyleInfo,
     ifDefined,
 } from '@spectrum-web-components/base';
 import { streamingListener } from '@spectrum-web-components/base/src/streaming-listener.js';
 
 import sliderStyles from './slider.css.js';
 import { Focusable } from '@spectrum-web-components/shared/src/focusable.js';
-import { StyleInfo } from 'lit-html/directives/style-map';
 
 export const variants = ['filled', 'ramp', 'range', 'tick'];
 
@@ -248,14 +248,11 @@ export class Slider extends Focusable {
             <div
                 id="handle"
                 style=${this.handleStyle}
-                @manage=${streamingListener(
-                    { type: 'pointerdown', fn: this.handlePointerdown },
-                    { type: 'pointermove', fn: this.handlePointermove },
-                    {
-                        type: ['pointerup', 'pointercancel'],
-                        fn: this.handlePointerup,
-                    }
-                )}
+                ${streamingListener({
+                    start: ['pointerdown', this.handlePointerdown],
+                    streamInside: ['pointermove', this.handlePointermove],
+                    end: [['pointerup', 'pointercancel'], this.handlePointerup],
+                })}
                 role="presentation"
             >
                 <input

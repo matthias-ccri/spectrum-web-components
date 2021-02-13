@@ -10,8 +10,14 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { customElement, html, LitElement, property } from 'lit-element';
-import { TemplateResult, render } from 'lit-html';
+import {
+    customElement,
+    html,
+    LitElement,
+    property,
+    TemplateResult,
+    render,
+} from '@spectrum-web-components/base';
 import '@spectrum-web-components/theme/sp-theme.js';
 import '@spectrum-web-components/theme/scale-medium.js';
 import '@spectrum-web-components/theme/theme-lightest.js';

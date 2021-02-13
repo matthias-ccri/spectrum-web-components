@@ -9,11 +9,9 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { html } from 'lit-html';
-
 import '../sp-slider.js';
 import { Slider } from '../';
-import { TemplateResult } from '@spectrum-web-components/base';
+import { TemplateResult, html } from '@spectrum-web-components/base';
 
 const action = (msg1: string) => (msg2: string | number): void =>
     console.log(msg1, msg2);

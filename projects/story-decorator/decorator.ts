@@ -10,7 +10,7 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 
-import { html, TemplateResult, render } from 'lit-html';
+import { html, TemplateResult, render } from '@spectrum-web-components/base';
 import './sp-story-decorator.js';
 
 export const themeStyles = html`
@@ -34,9 +34,7 @@ export const swcThemeDecoratorWithConfig = (
     }
     return html`
         ${themeStyles}
-        <sp-story-decorator>
-            ${bundled ? story() : html``}
-        </sp-story-decorator>
+        <sp-story-decorator>${bundled ? story() : html``}</sp-story-decorator>
     `;
 };
 
