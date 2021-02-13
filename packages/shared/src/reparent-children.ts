@@ -34,7 +34,7 @@ export const reparentChildren = (
         const srcElement = srcElements[index];
         if (prepareCallback) {
             cleanupCallbacks.push(
-                prepareCallback(srcElement) || ((_el: Element) => {})
+                prepareCallback(srcElement) || (() => { return; })
             );
         }
         const parentElement =
