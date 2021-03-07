@@ -13,6 +13,7 @@ import { html, TemplateResult } from '@spectrum-web-components/base';
 
 import '../sp-menu.js';
 import '../sp-menu-item.js';
+import '@spectrum-web-components/icons-workflow/icons/sp-icon-edit.js';
 
 export default {
     component: 'sp-menu-item',

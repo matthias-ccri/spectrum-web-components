@@ -4350,7 +4350,23 @@
     open "^8.0.2"
     portfinder "^1.0.28"
 
-"@web/parse5-utils@^1.0.0", "@web/parse5-utils@^1.1.2", "@web/parse5-utils@^1.2.0", "@web/parse5-utils@^1.2.2":
+"@web/parse5-utils@^1.0.0":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@web/parse5-utils/-/parse5-utils-1.1.2.tgz#b53e7f62679170371da36023517b23bbb1f7c582"
+  integrity sha512-/JQHbK53BmYiFK2igr2B+Psl2Ivp2ju75Nx1InZweTbxLQNGG9yUBaudER85aqebIH6smkPkKwVtpdBXBiwy1A==
+  dependencies:
+    "@types/parse5" "^5.0.3"
+    parse5 "^6.0.1"
+
+"@web/parse5-utils@^1.1.2", "@web/parse5-utils@^1.2.0":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@web/parse5-utils/-/parse5-utils-1.2.1.tgz#9e2a73fb12535f06c32af5a87836338a0d898651"
+  integrity sha512-FX5evV+qf5GjnNtvyHhuVKPVFqnSSECp0MnMtRLL63GV3aygiKe6B+Iqt6Xn0n1NsfKyh7zo2pw/rk0JtG2Vpw==
+  dependencies:
+    "@types/parse5" "^5.0.3"
+    parse5 "^6.0.1"
+
+"@web/parse5-utils@^1.2.2":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@web/parse5-utils/-/parse5-utils-1.2.2.tgz#33eec93321eb07cf364651c131b980a7afd8c4d7"
   integrity sha512-B68DoJ5qF8Cu3o7nDA2RQTCf9bslVz2b0WHTk3qir5YCbWfhnPEGhDOedOjbE8xDiHqgzI1zXQsJ2+655aluLA==
@@ -16497,9 +16513,9 @@ open@^7.0.0, open@^7.0.3, open@^7.4.2:
     is-wsl "^2.1.1"
 
 open@^8.0.2:
-  version "8.0.4"
-  resolved "https://registry.yarnpkg.com/open/-/open-8.0.4.tgz#2fb90debffcf20f4d7be537502ed3e3ee9e5dcbc"
-  integrity sha512-Txc9FOcvjrr5Kv+Zb3w89uKMKiP7wH8mLdYj1xJa+YnhhntEYhbB6cQHjS4O6P+jFwMEzEQVVcpfnu9WkKNuLQ==
+  version "8.0.2"
+  resolved "https://registry.yarnpkg.com/open/-/open-8.0.2.tgz#8c3e95cce93ba2fc8d99968ee8bfefecdb50b84f"
+  integrity sha512-NV5QmWJrTaNBLHABJyrb+nd5dXI5zfea/suWawBhkHzAbVhLLiJdrqMgxMypGK9Eznp2Ltoh7SAVkQ3XAucX7Q==
   dependencies:
     define-lazy-prop "^2.0.0"
     is-docker "^2.1.1"
