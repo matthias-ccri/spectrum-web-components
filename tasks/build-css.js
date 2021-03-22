@@ -32,10 +32,15 @@ const srcPath = path.resolve(path.join(__dirname, '..'));
 function whichDst(file, t) {
     const dirname = path.dirname(file.path);
     const component = dirname.split('packages/')[1].split('/')[0];
-    const name = file.relative.split('/')[2];
+    const fileParts = file.relative.split('/');
+    const name = fileParts[fileParts.length - 1];
     const base = file.base;
     file.path = path.join(base, name);
-    t.through(gulp.dest, ['packages/' + component + '/src/']);
+    const dest = ['packages/' + component + '/src/'];
+    if (!dirname.endsWith('src')) {
+        dest[0] += 'diet/';
+    }
+    t.through(gulp.dest, dest);
 }
 const configPath = path.resolve(path.join(__dirname, '..', 'config'));
 
@@ -43,6 +48,7 @@ const buildCSS = () => {
     const tsResult = merge([
         gulp.src([
             './packages/**/src/*.css',
+            './packages/**/src/diet/*.css',
             '!./packages/**/node_modules/**/*.css',
         ]),
     ])

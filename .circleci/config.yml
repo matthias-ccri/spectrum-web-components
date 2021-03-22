@@ -27,6 +27,8 @@ commands:
                   at: /
     run-regressions:
         parameters:
+            regression_flavor:
+                type: string
             regression_color:
                 type: string
             regression_scale:
@@ -37,13 +39,14 @@ commands:
             - restore_cache:
                   name: Restore Golden Images Cache
                   keys:
+                      - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_flavor >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
                       - v2-golden-images-<< pipeline.parameters.current_golden_images_hash >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
                       - v2-golden-images-main-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-
             - run:
                   name: Count baseline images
                   command: find test/visual/screenshots-baseline -type f | wc -l > count_start.txt
             - run: |
-                  yarn test:ci --config web-test-runner.config.ci.js --group vrt-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
+                  yarn test:ci --config web-test-runner.config.ci.js --group vrt-<< parameters.regression_flavor >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>
             # store results and artifacts before rearranging things for the new cache.
             - store_test_results:
                   path: /root/project/results/
@@ -83,12 +86,12 @@ commands:
                   name: Build Golden Images Revision Cache
                   paths:
                       - test/visual/screenshots-baseline
-                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_flavor >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
             - save_cache:
                   name: Build Golden Images Branch Cache
                   paths:
                       - test/visual/screenshots-baseline
-                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
+                  key: v2-golden-images-{{ .Revision }}-<< parameters.regression_flavor >>-<< parameters.regression_color >>-<< parameters.regression_scale >>-<< parameters.regression_dir >>-{{ epoch }}
 
 jobs:
     commitlint:
@@ -146,162 +149,354 @@ jobs:
                   branch=$(npx slugify-cli $branch)
                   yarn netlify deploy --alias=$branch
 
-    visual-lightest-medium-ltr:
+    classic-lightest-medium-ltr:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: lightest
                   regression_scale: medium
                   regression_dir: ltr
 
-    visual-lightest-medium-rtl:
+    classic-lightest-medium-rtl:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: lightest
                   regression_scale: medium
                   regression_dir: rtl
 
-    visual-lightest-large-ltr:
+    classic-lightest-large-ltr:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: lightest
                   regression_scale: large
                   regression_dir: ltr
 
-    visual-lightest-large-rtl:
+    classic-lightest-large-rtl:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: lightest
                   regression_scale: large
                   regression_dir: rtl
 
-    visual-light-medium-ltr:
+    classic-light-medium-ltr:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: light
                   regression_scale: medium
                   regression_dir: ltr
 
-    visual-light-medium-rtl:
+    classic-light-medium-rtl:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: light
                   regression_scale: medium
                   regression_dir: rtl
 
-    visual-light-large-ltr:
+    classic-light-large-ltr:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: light
                   regression_scale: large
                   regression_dir: ltr
 
-    visual-light-large-rtl:
+    classic-light-large-rtl:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: light
                   regression_scale: large
                   regression_dir: rtl
 
-    visual-dark-medium-ltr:
+    classic-dark-medium-ltr:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: dark
                   regression_scale: medium
                   regression_dir: ltr
 
-    visual-dark-medium-rtl:
+    classic-dark-medium-rtl:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: dark
                   regression_scale: medium
                   regression_dir: rtl
 
-    visual-dark-large-ltr:
+    classic-dark-large-ltr:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: dark
                   regression_scale: large
                   regression_dir: ltr
 
-    visual-dark-large-rtl:
+    classic-dark-large-rtl:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: dark
                   regression_scale: large
                   regression_dir: rtl
 
-    visual-darkest-medium-ltr:
+    classic-darkest-medium-ltr:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: darkest
                   regression_scale: medium
                   regression_dir: ltr
 
-    visual-darkest-medium-rtl:
+    classic-darkest-medium-rtl:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: darkest
                   regression_scale: medium
                   regression_dir: rtl
 
-    visual-darkest-large-ltr:
+    classic-darkest-large-ltr:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
                   regression_color: darkest
                   regression_scale: large
                   regression_dir: ltr
 
-    visual-darkest-large-rtl:
+    classic-darkest-large-rtl:
         executor: node
 
         steps:
             - downstream
             - run-regressions:
+                  regression_flavor: classic
+                  regression_color: darkest
+                  regression_scale: large
+                  regression_dir: rtl
+
+    express-lightest-medium-ltr:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: lightest
+                  regression_scale: medium
+                  regression_dir: ltr
+
+    express-lightest-medium-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: lightest
+                  regression_scale: medium
+                  regression_dir: rtl
+
+    express-lightest-large-ltr:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: lightest
+                  regression_scale: large
+                  regression_dir: ltr
+
+    express-lightest-large-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: lightest
+                  regression_scale: large
+                  regression_dir: rtl
+
+    express-light-medium-ltr:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: light
+                  regression_scale: medium
+                  regression_dir: ltr
+
+    express-light-medium-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: light
+                  regression_scale: medium
+                  regression_dir: rtl
+
+    express-light-large-ltr:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: light
+                  regression_scale: large
+                  regression_dir: ltr
+
+    express-light-large-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: light
+                  regression_scale: large
+                  regression_dir: rtl
+
+    express-dark-medium-ltr:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: dark
+                  regression_scale: medium
+                  regression_dir: ltr
+
+    express-dark-medium-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: dark
+                  regression_scale: medium
+                  regression_dir: rtl
+
+    express-dark-large-ltr:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: dark
+                  regression_scale: large
+                  regression_dir: ltr
+
+    express-dark-large-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: dark
+                  regression_scale: large
+                  regression_dir: rtl
+
+    express-darkest-medium-ltr:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: darkest
+                  regression_scale: medium
+                  regression_dir: ltr
+
+    express-darkest-medium-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: darkest
+                  regression_scale: medium
+                  regression_dir: rtl
+
+    express-darkest-large-ltr:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
+                  regression_color: darkest
+                  regression_scale: large
+                  regression_dir: ltr
+
+    express-darkest-large-rtl:
+        executor: node
+
+        steps:
+            - downstream
+            - run-regressions:
+                  regression_flavor: express
                   regression_color: darkest
                   regression_scale: large
                   regression_dir: rtl
@@ -328,82 +523,162 @@ workflows:
         jobs:
             - test
             - docs-preview
-            - visual-lightest-medium-ltr:
+            - classic-lightest-medium-ltr:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-lightest-large-ltr:
+            - classic-lightest-large-ltr:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-light-medium-ltr:
+            - classic-light-medium-ltr:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-light-large-ltr:
+            - classic-light-large-ltr:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-dark-medium-ltr:
+            - classic-dark-medium-ltr:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-dark-large-ltr:
+            - classic-dark-large-ltr:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-darkest-medium-ltr:
+            - classic-darkest-medium-ltr:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-darkest-large-ltr:
+            - classic-darkest-large-ltr:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-lightest-medium-rtl:
+            - classic-lightest-medium-rtl:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-lightest-large-rtl:
+            - classic-lightest-large-rtl:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-light-medium-rtl:
+            - classic-light-medium-rtl:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-light-large-rtl:
+            - classic-light-large-rtl:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-dark-medium-rtl:
+            - classic-dark-medium-rtl:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-dark-large-rtl:
+            - classic-dark-large-rtl:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-darkest-medium-rtl:
+            - classic-darkest-medium-rtl:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
                           ignore: /pull\/[0-9]+/
-            - visual-darkest-large-rtl:
+            - classic-darkest-large-rtl:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-lightest-medium-ltr:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-lightest-large-ltr:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-light-medium-ltr:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-light-large-ltr:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-dark-medium-ltr:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-dark-large-ltr:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-darkest-medium-ltr:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-darkest-large-ltr:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-lightest-medium-rtl:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-lightest-large-rtl:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-light-medium-rtl:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-light-large-rtl:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-dark-medium-rtl:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-dark-large-rtl:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-darkest-medium-rtl:
+                  filters:
+                      branches:
+                          # Forked pull requests have CIRCLE_BRANCH set to pull/XXX
+                          ignore: /pull\/[0-9]+/
+            - express-darkest-large-rtl:
                   filters:
                       branches:
                           # Forked pull requests have CIRCLE_BRANCH set to pull/XXX

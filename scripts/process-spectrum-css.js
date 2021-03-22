@@ -70,15 +70,13 @@ async function processComponent(componentPath) {
                 from: inputCssPath,
                 to: outputCssPath,
             });
-            await postcss([postcssCustomProperties]).process(
-                inputCustomProperties,
-                {
-                    from: `node_modules/@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`,
-                },
-                {
+            await postcss([
+                postcssCustomProperties({
                     exportTo: [outputJsonPath],
-                }
-            );
+                }),
+            ]).process(inputCustomProperties, {
+                from: `node_modules/@spectrum-css/${spectrumConfig.spectrum}/dist/vars.css`,
+            });
             console.log(chalk.bold.green(`  o ${component.name}`));
             // await fs.writeFile(outputJsonPath, outputJson, { encoding: 'utf8' });
             return fs.writeFile(outputCssPath, outputCss.css, {

@@ -106,6 +106,7 @@ export class Overlay {
         const queryThemeDetail: ThemeData = {
             color: undefined,
             scale: undefined,
+            flavor: undefined,
         };
         const queryThemeEvent = new CustomEvent<ThemeData>('sp-query-theme', {
             bubbles: true,

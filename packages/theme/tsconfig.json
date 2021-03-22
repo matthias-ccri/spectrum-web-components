@@ -4,7 +4,7 @@
         "composite": true,
         "rootDir": "./"
     },
-    "include": ["*.ts", "src/*.ts"],
+    "include": ["*.ts", "src/**/*.ts", "diet/*.ts"],
     "exclude": ["test/*.ts", "stories/*.ts"],
     "references": [{ "path": "../base" }]
 }

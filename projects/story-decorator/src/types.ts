@@ -9,11 +9,12 @@ the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR REPRESENTA
 OF ANY KIND, either express or implied. See the License for the specific language
 governing permissions and limitations under the License.
 */
-import { Scale, Color } from '@spectrum-web-components/theme';
+import { Scale, Color, Flavor } from '@spectrum-web-components/theme';
 
 declare global {
     interface Window {
         __swc_hack_knobs__: {
+            defaultFlavor: Flavor;
             defaultColor: Color;
             defaultScale: Scale;
             defaultDirection: 'ltr' | 'rtl';

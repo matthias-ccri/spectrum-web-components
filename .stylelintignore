@@ -3,3 +3,4 @@ task
 *.*
 !*.css
 projects/example-project/dist
+packages/styles/diet/components/*

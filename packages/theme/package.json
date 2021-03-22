@@ -22,6 +22,8 @@
     "exports": {
         ".": "./src/index.js",
         "./src/*": "./src/*",
+        "./diet/*": "./diet/*",
+        "./src/diet/*": "./src/diet/*",
         "./package.json": "./package.json",
         "./sp-theme": "./sp-theme.js",
         "./sp-theme.js": "./sp-theme.js",
@@ -68,7 +70,15 @@
         "./theme-*.ts",
         "./scale-*.js",
         "./scale-*.ts",
+        "./diet/theme-*.js",
+        "./diet/theme-*.ts",
+        "./diet/scale-*.js",
+        "./diet/scale-*.ts",
         "./src/themes.js",
-        "./src/themes.ts"
+        "./src/themes.ts",
+        "./src/diet/core.js",
+        "./src/diet/core.ts",
+        "./src/diet/themes.js",
+        "./src/diet/themes.ts"
     ]
 }

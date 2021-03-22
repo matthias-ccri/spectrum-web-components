@@ -6,10 +6,11 @@
     "license": "Apache-2.0",
     "author": "",
     "main": "index.js",
+    "type": "module",
     "scripts": {
         "build": "webpack",
         "build:prod": "webpack --env.NODE_ENV=production --optimize-minimize",
-        "serve": "webpack-dev-server"
+        "serve": "webpack serve"
     },
     "dependencies": {
         "@spectrum-web-components/button": "^0.13.5",
@@ -31,8 +32,9 @@
         "postcss-loader": "^3.0.0",
         "postcss-preset-env": "^6.5.0",
         "style-loader": "^1.0.0",
-        "webpack": "^4.27.0",
+        "webpack": "^4.41.6",
         "webpack-bundle-analyzer": "^4.3.0",
-        "webpack-cli": "^4.3.1"
+        "webpack-cli": "^4.6.0",
+        "webpack-dev-server": "^3.11.2"
     }
 }

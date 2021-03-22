@@ -40,34 +40,54 @@ declare global {
     }
 }
 
-type FragmentType = 'color' | 'scale' | 'core';
-type SettableFragmentTypes = 'color' | 'scale';
+type FragmentType = 'color' | 'scale' | 'flavor';
+type SettableFragmentTypes = 'color' | 'scale' | 'flavor';
 type FragmentMap = Map<string, { name: string; styles: CSSResult }>;
 export type ThemeFragmentMap = Map<FragmentType, FragmentMap>;
-export type Color = 'light' | 'lightest' | 'dark' | 'darkest';
-export type Scale = 'medium' | 'large';
-const ScaleValues = ['medium', 'large'];
-const ColorValues = ['light', 'lightest', 'dark', 'darkest'];
-type FragmentName = Color | Scale | 'core';
+export type Color =
+    | 'light'
+    | 'lightest'
+    | 'dark'
+    | 'darkest'
+    | 'light-express'
+    | 'lightest-express'
+    | 'dark-express'
+    | 'darkest-express';
+export type Scale = 'medium' | 'large' | 'medium-express' | 'large-express';
+export type Flavor = 'classic' | 'express';
+const FlavorValues = ['classic', 'express'];
+const ScaleValues = ['medium', 'large', 'medium-express', 'large-express'];
+const ColorValues = [
+    'light',
+    'lightest',
+    'dark',
+    'darkest',
+    'light-express',
+    'lightest-express',
+    'dark-express',
+    'darkest-express',
+];
+type FragmentName = Color | Scale | Flavor;
 
 export interface ThemeData {
     color?: Color;
     scale?: Scale;
+    flavor?: Flavor;
 }
 
 type ThemeKindProvider = {
-    [P in SettableFragmentTypes]: Color | Scale | '';
+    [P in SettableFragmentTypes]: Flavor | Color | Scale | '';
 };
 
 export class Theme extends HTMLElement implements ThemeKindProvider {
     private hasAdoptedStyles = false;
     private static themeFragmentsByKind: ThemeFragmentMap = new Map();
-    private static defaultFragments: Set<FragmentName> = new Set(['core']);
+    private static defaultFragments: Set<FragmentName> = new Set(['classic']);
     private static templateElement?: HTMLTemplateElement;
     private static instances: Set<Theme> = new Set();
 
     static get observedAttributes(): string[] {
-        return ['color', 'scale'];
+        return ['color', 'scale', 'flavor'];
     }
 
     protected attributeChangedCallback(
@@ -82,22 +102,54 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
             this.color = value as Color;
         } else if (attrName === 'scale') {
             this.scale = value as Scale;
+        } else if (attrName === 'flavor') {
+            this.flavor = value as Flavor;
         }
     }
 
+    // private updateRequested = false;
+
     private requestUpdate(): void {
+        // if(!this.updateRequested) {
         this.hasAdoptedStyles = false;
+        // this.updateRequested = true;
+        // Promise.resolve().then(() => {
+        // this.updateRequested = false;
         if (window.ShadyCSS !== undefined && !window.ShadyCSS.nativeShadow) {
             window.ShadyCSS.styleElement(this);
         } else {
             this.shouldAdoptStyles();
         }
+        // });
+        // }
     }
 
     public shadowRoot!: ShadowRoot;
 
-    get core(): 'core' {
-        return 'core';
+    private _flavor: Flavor | '' = 'classic';
+
+    get flavor(): Flavor | '' {
+        const themeFragments = Theme.themeFragmentsByKind.get('flavor');
+        const { name } =
+            (themeFragments && themeFragments.get('default')) || {};
+        return this._flavor || (name as Flavor) || '';
+    }
+
+    set flavor(newValue: Flavor | '') {
+        if (newValue === this._flavor) return;
+        const flavor =
+            !!newValue && FlavorValues.includes(newValue)
+                ? newValue
+                : this.flavor;
+        if (flavor !== this._flavor) {
+            this._flavor = flavor;
+            this.requestUpdate();
+        }
+        if (flavor) {
+            this.setAttribute('flavor', flavor);
+        } else {
+            this.removeAttribute('flavor');
+        }
     }
 
     private _color: Color | '' = '';
@@ -198,6 +250,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
         const { detail: theme } = event;
         theme.color = this.color || undefined;
         theme.scale = this.scale || undefined;
+        theme.flavor = this.flavor || undefined;
     }
 
     protected connectedCallback(): void {
@@ -231,7 +284,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
                 !(dirParent instanceof Theme)
             ) {
                 dirParent = ((dirParent as HTMLElement).assignedSlot || // step into the shadow DOM of the parent of a slotted node
-                dirParent.parentNode || // DOM Element detected
+                    dirParent.parentNode || // DOM Element detected
                     (dirParent as ShadowRoot).host) as
                     | HTMLElement
                     | DocumentFragment
@@ -268,7 +321,7 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 
     private get expectedFragments(): number {
-        // color, scale and core
+        // color, scale and flavor
         return 3;
     }
 
@@ -344,4 +397,4 @@ export class Theme extends HTMLElement implements ThemeKindProvider {
     }
 }
 
-Theme.registerThemeFragment('core', 'core', coreStyles);
+Theme.registerThemeFragment('classic', 'flavor', coreStyles);

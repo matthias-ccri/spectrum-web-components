@@ -21,8 +21,8 @@ import {
 import './side-nav.js';
 import layoutStyles from './layout.css';
 import '@spectrum-web-components/theme/sp-theme.js';
-import '@spectrum-web-components/theme/src/themes.js';
-import { Color, Scale } from '@spectrum-web-components/theme';
+import '@spectrum-web-components/theme/src/diet/themes.js';
+import { Color, Scale, Flavor } from '@spectrum-web-components/theme';
 import '@spectrum-web-components/field-label/sp-field-label.js';
 import { Picker } from '@spectrum-web-components/picker';
 import '@spectrum-web-components/picker/sp-picker.js';
@@ -31,14 +31,19 @@ import '@spectrum-web-components/menu/sp-menu-item.js';
 import '@spectrum-web-components/action-button/sp-action-button.js';
 import '@spectrum-web-components/toast/sp-toast.js';
 
+const SWC_THEME_FLAVOR_KEY = 'swc-docs:theme:flavor';
 const SWC_THEME_COLOR_KEY = 'swc-docs:theme:color';
 const SWC_THEME_SCALE_KEY = 'swc-docs:theme:scale';
 const SWC_THEME_DIR_KEY = 'swc-docs:theme:dir';
+const FLAVOR_FALLBACK = 'classic';
 const COLOR_FALLBACK = matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark'
     : 'light';
 const SCALE_MEDIUM = 'medium';
 const DIR_FALLBACK = 'ltr';
+const DEFAULT_FLAVOR = (window.localStorage
+    ? localStorage.getItem(SWC_THEME_FLAVOR_KEY) || FLAVOR_FALLBACK
+    : FLAVOR_FALLBACK) as Flavor;
 const DEFAULT_COLOR = (window.localStorage
     ? localStorage.getItem(SWC_THEME_COLOR_KEY) || COLOR_FALLBACK
     : COLOR_FALLBACK) as Color;
@@ -71,6 +76,9 @@ export class LayoutElement extends SpectrumElement {
     > = new Map();
 
     @property({ attribute: false })
+    public flavor: Flavor = DEFAULT_FLAVOR;
+
+    @property({ attribute: false })
     public color: Color = DEFAULT_COLOR;
 
     @property({ reflect: true })
@@ -97,6 +105,10 @@ export class LayoutElement extends SpectrumElement {
 
     closeNav() {
         this.open = false;
+    }
+
+    private updateFlavor(event: Event) {
+        this.flavor = (event.target as Picker).value as Flavor;
     }
 
     private updateColor(event: Event) {
@@ -170,11 +182,22 @@ export class LayoutElement extends SpectrumElement {
         `;
     }
 
+    private get flavoredColor(): Color {
+        return (this.color +
+            (this.flavor === 'express' ? '-express' : '')) as Color;
+    }
+
+    private get flavoredScale(): Scale {
+        return (this.scale +
+            (this.flavor === 'express' ? '-express' : '')) as Scale;
+    }
+
     render() {
         return html`
             <sp-theme
-                color=${this.color}
-                scale=${this.scale}
+                flavor=${this.flavor}
+                color=${this.flavoredColor}
+                scale=${this.flavoredScale}
                 dir=${this.dir}
                 id="app"
                 @sp-track-theme=${this.handleTrackTheme}
@@ -235,6 +258,26 @@ export class LayoutElement extends SpectrumElement {
                     >
                         <div id="page" @alert=${this.addAlert}>
                             <div class="manage-theme">
+                                <sp-field-label
+                                    for="theme-spectrum"
+                                    side-aligned="start"
+                                >
+                                    Spectrum
+                                </sp-field-label>
+                                <sp-picker
+                                    id="theme-spectrum"
+                                    placement="bottom"
+                                    quiet
+                                    value=${this.flavor}
+                                    @change=${this.updateFlavor}
+                                >
+                                    <sp-menu-item value="classic">
+                                        Classic
+                                    </sp-menu-item>
+                                    <sp-menu-item value="express">
+                                        Express
+                                    </sp-menu-item>
+                                </sp-picker>
                                 <sp-field-label
                                     for="theme-color"
                                     side-aligned="start"
@@ -318,6 +361,9 @@ export class LayoutElement extends SpectrumElement {
     }
 
     updated(changes: PropertyValues) {
+        if (changes.has('flavor') && window.localStorage) {
+            localStorage.setItem(SWC_THEME_FLAVOR_KEY, this.flavor);
+        }
         if (changes.has('color') && window.localStorage) {
             localStorage.setItem(SWC_THEME_COLOR_KEY, this.color);
         }

@@ -34,7 +34,7 @@ describe('Themes - lazy', () => {
     beforeEach(() => {
         ((Theme as unknown) as TestableThemeConstructor).themeFragmentsByKind.clear();
         // Core is registered by default in `theme.ts`
-        Theme.registerThemeFragment('core', 'core', coreStyles);
+        Theme.registerThemeFragment('classic', 'flavor', coreStyles);
     });
     after(() => {
         Theme.registerThemeFragment('light', 'color', lightStyles);

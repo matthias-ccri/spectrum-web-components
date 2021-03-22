@@ -11,7 +11,10 @@ governing permissions and limitations under the License.
 */
 
 // import our stylesheets
-import './styles.css';
+import '@spectrum-web-components/theme/sp-theme.js';
+import '@spectrum-web-components/theme/src/diet/core.js';
+import '@spectrum-web-components/theme/diet/theme-light.js';
+import '@spectrum-web-components/theme/diet/scale-medium.js';
 
 // import the components we'll use in this page
 import '@spectrum-web-components/button/sp-button';

@@ -10,7 +10,6 @@ OF ANY KIND, either express or implied. See the License for the specific languag
 governing permissions and limitations under the License.
 */
 import { html, CSSResultArray, TemplateResult } from 'lit-element';
-import '@spectrum-web-components/bundle/elements.js';
 // work around while `top-nav` isn't "officially" in the bundle
 import '@spectrum-web-components/top-nav/sp-top-nav.js';
 import '@spectrum-web-components/top-nav/sp-top-nav-item.js';
