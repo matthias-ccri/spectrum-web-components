@@ -1,6 +1,6 @@
-const rollupJson = require('@rollup/plugin-json');
+import rollupJson from '@rollup/plugin-json';
 
-module.exports = {
+export default {
     stories: [
         // We'd like to only need the following by the end of the conversion process...
         // '../packages/*/stories/*.stories.js'
