@@ -139,10 +139,11 @@ export class Menu extends SpectrumElement {
         }
         event.preventDefault();
         const direction = code === 'ArrowDown' ? 1 : -1;
-        this.focusMenuItemByOffset(direction);
+        const itemToFocus = this.focusMenuItemByOffset(direction);
+        itemToFocus.scrollIntoView({ block: 'nearest' });
     }
 
-    public focusMenuItemByOffset(offset: number): void {
+    public focusMenuItemByOffset(offset: number): MenuItem {
         const step = offset || 1;
         const focusedItem = this.menuItems[this.focusedItemIndex] as MenuItem;
         focusedItem.focused = false;
@@ -160,13 +161,12 @@ export class Menu extends SpectrumElement {
             itemToFocus = this.menuItems[this.focusedItemIndex] as MenuItem;
         }
         // if there are no non-disabled items, skip the work to focus a child
-        if (itemToFocus.disabled) {
-            return;
+        if (!itemToFocus.disabled) {
+            itemToFocus.focused = true;
+            this.setAttribute('aria-activedescendant', itemToFocus.id);
+            focusedItem.tabIndex = -1;
         }
-        itemToFocus.focused = true;
-        itemToFocus.scrollIntoView({ block: 'nearest' });
-        this.setAttribute('aria-activedescendant', itemToFocus.id);
-        focusedItem.tabIndex = -1;
+        return itemToFocus;
     }
 
     private prepareToCleanUp(): void {
@@ -262,6 +262,12 @@ export class Menu extends SpectrumElement {
         }
         this.observer.observe(this, { childList: true, subtree: true });
         this.updateComplete.then(() => this.prepItems());
+        const selectedItem = this.querySelector('[selected]');
+        if (selectedItem) {
+            requestAnimationFrame(() => {
+                selectedItem.scrollIntoView({ block: 'nearest' });
+            });
+        }
     }
 
     public disconnectedCallback(): void {
