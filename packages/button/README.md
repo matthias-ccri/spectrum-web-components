@@ -30,44 +30,44 @@ import { Button, ClearButton } from '@spectrum-web-components/button';
 
 ## Sizes
 
-<sp-tabs selected="m">
+<sp-tabs selected="m" auto>
     <sp-tab value="s">Small</sp-tab>
     <sp-tab value="m">Medium</sp-tab>
     <sp-tab value="l">Large</sp-tab>
     <sp-tab value="xl">Extra Large</sp-tab>
-</sp-tabs>
 
-<div class="tabs--s">
+<sp-tab-panel value="s">
 
 ```html demo
 <sp-button size="s">Small</sp-button>
 ```
 
-</div>
+</sp-tab-panel>
 
-<div class="tabs--m">
+<sp-tab-panel value="m">
 
 ```html demo
 <sp-button size="m">Medium</sp-button>
 ```
 
-</div>
+</sp-tab-panel>
 
-<div class="tabs--l">
+<sp-tab-panel value="l">
 
 ```html demo
 <sp-button size="l">Large</sp-button>
 ```
 
-</div>
+</sp-tab-panel>
 
-<div class="tabs--xl">
+<sp-tab-panel value="xl">
 
 ```html demo
 <sp-button size="xl">Extra Large</sp-button>
 ```
 
-</div>
+</sp-tab-panel>
+</sp-tabs>
 
 ## Variants
 

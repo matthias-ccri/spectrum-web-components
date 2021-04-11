@@ -33,6 +33,7 @@ import componentStyles from './component.css';
 import { AppRouter } from '../router.js';
 import '@spectrum-web-components/tabs/sp-tab.js';
 import '@spectrum-web-components/tabs/sp-tabs.js';
+import '@spectrum-web-components/tabs/sp-tab-panel.js';
 import { Tabs } from '@spectrum-web-components/tabs';
 import docs from '../../custom-elements.json';
 

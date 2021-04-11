@@ -26,14 +26,13 @@ import { FieldLabel } from '@spectrum-web-components/field-label';
 
 ## Sizes
 
-<sp-tabs selected="m">
+<sp-tabs selected="m" auto>
     <sp-tab value="s">Small</sp-tab>
     <sp-tab value="m">Medium</sp-tab>
     <sp-tab value="l">Large</sp-tab>
     <sp-tab value="xl">Extra Large</sp-tab>
-</sp-tabs>
 
-<div class="tabs--s">
+<sp-tab-panel value="s">
 
 ```html demo
 <sp-field-label for="lifestory-0" size="s">Life Story</sp-field-label>
@@ -43,9 +42,9 @@ import { FieldLabel } from '@spectrum-web-components/field-label';
 ></sp-textfield>
 ```
 
-</div>
+</sp-tab-panel>
 
-<div class="tabs--m">
+<sp-tab-panel value="m">
 
 ```html demo
 <sp-field-label for="lifestory-1" size="m">Life Story</sp-field-label>
@@ -55,9 +54,9 @@ import { FieldLabel } from '@spectrum-web-components/field-label';
 ></sp-textfield>
 ```
 
-</div>
+</sp-tab-panel>
 
-<div class="tabs--l">
+<sp-tab-panel value="l">
 
 ```html demo
 <sp-field-label for="lifestory-2" size="l">Life Story</sp-field-label>
@@ -67,9 +66,9 @@ import { FieldLabel } from '@spectrum-web-components/field-label';
 ></sp-textfield>
 ```
 
-</div>
+</sp-tab-panel>
 
-<div class="tabs--xl">
+<sp-tab-panel value="xl">
 
 ```html demo
 <sp-field-label for="lifestory-3" size="xl">Life Story</sp-field-label>
@@ -79,7 +78,8 @@ import { FieldLabel } from '@spectrum-web-components/field-label';
 ></sp-textfield>
 ```
 
-</div>
+</sp-tab-panel>
+</sp-tabs>
 
 ## Examples
 

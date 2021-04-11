@@ -26,44 +26,44 @@ import { StatusLight } from '@spectrum-web-components/status-light';
 
 ## Sizes
 
-<sp-tabs selected="m">
+<sp-tabs selected="m" auto>
     <sp-tab value="s">Small</sp-tab>
     <sp-tab value="m">Medium</sp-tab>
     <sp-tab value="l">Large</sp-tab>
     <sp-tab value="xl">Extra Large</sp-tab>
-</sp-tabs>
 
-<div class="tabs--s">
+<sp-tab-panel value="s">
 
 ```html
 <sp-status-light size="s" variant="positive">approved</sp-status-light>
 ```
 
-</div>
+</sp-tab-panel>
 
-<div class="tabs--m">
+<sp-tab-panel value="m">
 
 ```html
 <sp-status-light size="m" variant="positive">approved</sp-status-light>
 ```
 
-</div>
+</sp-tab-panel>
 
-<div class="tabs--l">
+<sp-tab-panel value="l">
 
 ```html
 <sp-status-light size="l" variant="positive">approved</sp-status-light>
 ```
 
-</div>
+</sp-tab-panel>
 
-<div class="tabs--xl">
+<sp-tab-panel value="xl">
 
 ```html
 <sp-status-light size="xl" variant="positive">approved</sp-status-light>
 ```
 
-</div>
+</sp-tab-panel>
+</sp-tabs>
 
 ### Variants
 
